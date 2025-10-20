@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظم الأفكار الإبداعي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        header {
+            background: linear-gradient(to right, #4A00E0, #8E2DE2);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .app-body {
+            display: flex;
+            min-height: 600px;
+        }
+        
+        .input-section {
+            flex: 1;
+            padding: 25px;
+            background: #f8f9fa;
+            border-left: 1px solid #e9ecef;
+        }
+        
+        .ideas-section {
+            flex: 2;
+            padding: 25px;
+            background: white;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #4A00E0;
+            border-bottom: 2px solid #4A00E0;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        textarea, input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        textarea:focus, input:focus, select:focus {
+            border-color: #4A00E0;
+            box-shadow: 0 0 0 3px rgba(74, 0, 224, 0.1);
+            outline: none;
+        }
+        
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background: linear-gradient(to right, #4A00E0, #8E2DE2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #11998e, #38ef7d);
+        }
+        
+        .image-upload {
+            border: 2px dashed #8E2DE2;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .image-upload:hover {
+            background: rgba(142, 45, 226, 0.05);
+        }
+        
+        .image-upload i {
+            font-size: 2.5rem;
+            color: #8E2DE2;
+            margin-bottom: 10px;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .ideas-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .idea-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border: 1px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .idea-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .idea-card.priority-high {
+            border-right: 5px solid #e74c3c;
+        }
+        
+        .idea-card.priority-medium {
+            border-right: 5px solid #f39c12;
+        }
+        
+        .idea-card.priority-low {
+            border-right: 5px solid #2ecc71;
+        }
+        
+        .idea-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .idea-content {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .idea-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            max-height: 150px;
+            object-fit: cover;
+        }
+        
+        .idea-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 15px;
+        }
+        
+        .idea-actions {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #7f8c8d;
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.1);
+            color: #4A00E0;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+        
+        .category-tag {
+            display: inline-block;
+            padding: 5px 12px;
+            background: #e1f0ff;
+            color: #4A00E0;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .app-body {
+                flex-direction: column;
+            }
+            
+            .input-section {
+                border-left: none;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 5px;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .tab.active {
+            background: #4A00E0;
+            color: white;
+        }
+        
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .color-option.selected {
+            border-color: #333;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-lightbulb"></i> منظم الأفكار الإبداعي</h1>
+            <p class="subtitle">رتب أفكارك، أنشئ مشاريعك، وحقق أهدافك</p>
+        </header>
+        
+        <div class="app-body">
+            <section class="input-section">
+                <h2 class="section-title"><i class="fas fa-plus-circle"></i> إضافة فكرة جديدة</h2>
+                
+                <div class="input-group">
+                    <label for="ideaTitle"><i class="fas fa-heading"></i> عنوان الفكرة</label>
+                    <input type="text" id="ideaTitle" placeholder="اكتب عنواناً موجزاً لفكرتك">
+                </div>
+                
+                <div class="input-group">
+                    <label for="ideaContent"><i class="fas fa-edit"></i> وصف الفكرة</label>
+                    <textarea id="ideaContent" placeholder="صف فكرتك بالتفصيل..."></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label for="ideaCategory"><i class="fas fa-tags"></i> التصنيف</label>
+                    <select id="ideaCategory">
+                        <option value="عام">عام</option>
+                        <option value="عمل">عمل</option>
+                        <option value="شخصي">شخصي</option>
+                        <option value="تعليم">تعليم</option>
+                        <option value="إبداعي">إبداعي</option>
+                        <option value="تطوير">تطوير</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="ideaPriority"><i class="fas fa-exclamation-circle"></i> الأولوية</label>
+                    <select id="ideaPriority">
+                        <option value="low">منخفضة</option>
+                        <option value="medium">متوسطة</option>
+                        <option value="high">عالية</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-palette"></i> لون الفكرة</label>
+                    <div class="color-palette">
+                        <div class="color-option selected" style="background-color: #ffffff;" data-color="#ffffff"></div>
+                        <div class="color-option" style="background-color: #e1f0ff;" data-color="#e1f0ff"></div>
+                        <div class="color-option" style="background-color: #fff2e1;" data-color="#fff2e1"></div>
+                        <div class="color-option" style="background-color: #e1ffe1;" data-color="#e1ffe1"></div>
+                        <div class="color-option" style="background-color: #ffe1f0;" data-color="#ffe1f0"></div>
+                    </div>
+                </div>
+                
+                <button id="addIdeaBtn" class="btn"><i class="fas fa-plus"></i> إضافة الفكرة</button>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-camera"></i> إضافة فكرة من صورة</label>
+                    <div class="image-upload" id="imageUpload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>انقر لرفع صورة أو اسحبها هنا</p>
+                        <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                    </div>
+                    <img id="imagePreview" class="image-preview" alt="معاينة الصورة">
+                    <button id="addImageIdeaBtn" class="btn btn-secondary" style="display: none; margin-top: 15px;">
+                        <i class="fas fa-image"></i> إضافة الفكرة من الصورة
+                    </button>
+                </div>
+            </section>
+            
+            <section class="ideas-section">
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i> أفكارك</h2>
+                
+                <div class="tabs">
+                    <div class="tab active" data-filter="all">جميع الأفكار</div>
+                    <div class="tab" data-filter="high">عالية الأولوية</div>
+                    <div class="tab" data-filter="work">أفكار العمل</div>
+                    <div class="tab" data-filter="creative">إبداعية</div>
+                </div>
+                
+                <div class="ideas-container" id="ideasContainer">
+                    <!-- سيتم عرض الأفكار هنا ديناميكياً -->
+                    <div class="empty-state">
+                        <i class="far fa-lightbulb"></i>
+                        <h3>لا توجد أفكار حتى الآن</h3>
+                        <p>ابدأ بإضافة أول فكرة باستخدام النموذج على اليسار</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // العناصر الرئيسية
+            const ideasContainer = document.getElementById('ideasContainer');
+            const addIdeaBtn = document.getElementById('addIdeaBtn');
+            const imageUpload = document.getElementById('imageUpload');
+            const imageInput = document.getElementById('imageInput');
+            const imagePreview = document.getElementById('imagePreview');
+            const addImageIdeaBtn = document.getElementById('addImageIdeaBtn');
+            const tabs = document.querySelectorAll('.tab');
+            const colorOptions = document.querySelectorAll('.color-option');
+            
+            // بيانات التطبيق
+            let ideas = JSON.parse(localStorage.getItem('ideas')) || [];
+            let selectedColor = '#ffffff';
+            
+            // تهيئة الألوان
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    colorOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedColor = this.getAttribute('data-color');
+                });
+            });
+            
+            // إضافة فكرة نصية
+            addIdeaBtn.addEventListener('click', function() {
+                const title = document.getElementById('ideaTitle').value.trim();
+                const content = document.getElementById('ideaContent').value.trim();
+                const category = document.getElementById('ideaCategory').value;
+                const priority = document.getElementById('ideaPriority').value;
+                
+                if (!title) {
+                    alert('يرجى إدخال عنوان للفكرة');
+                    return;
+                }
+                
+                const newIdea = {
+                    id: Date.now(),
+                    title,
+                    content,
+                    category,
+                    priority,
+                    color: selectedColor,
+                    type: 'text',
+                    date: new Date().toLocaleDateString('ar-EG')
+                };
+                
+                ideas.push(newIdea);
+                saveIdeas();
+                renderIdeas();
+                resetForm();
+                
+                // تأثير إضافة ناجحة
+                addIdeaBtn.innerHTML = '<i class="fas fa-check"></i> تمت الإضافة!';
+                setTimeout(() => {
+                    addIdeaBtn.innerHTML = '<i class="fas fa-plus"></i> إضافة الفكرة';
+                }, 2000);
+            });
+            
+            // رفع الصورة
+            imageUpload.addEventListener('click', function() {
+                imageInput.click();
+            });
+            
+            imageInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        imagePreview.src = event.target.result;
+                        imagePreview.style.display = 'block';
+                        addImageIdeaBtn.style.display = 'block';
+                    };
+                    
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+            
+            // إضافة فكرة من صورة
+            addImageIdeaBtn.addEventListener('click', function() {
+                const title = `فكرة من صورة - ${new Date().toLocaleDateString('ar-EG')}`;
+                
+                const newIdea = {
+                    id: Date.now(),
+                    title,
+                    content: 'فكرة مستوحاة من الصورة المرفوعة',
+                    category: 'إبداعي',
+                    priority: 'medium',
+                    color: selectedColor,
+                    type: 'image',
+                    image: imagePreview.src,
+                    date: new Date().toLocaleDateString('ar-EG')
+                };
+                
+                ideas.push(newIdea);
+                saveIdeas();
+                renderIdeas();
+                
+                // إعادة تعيين معاينة الصورة
+                imagePreview.style.display = 'none';
+                addImageIdeaBtn.style.display = 'none';
+                imageInput.value = '';
+                
+                // تأثير إضافة ناجحة
+                addImageIdeaBtn.innerHTML = '<i class="fas fa-check"></i> تمت الإضافة!';
+                setTimeout(() => {
+                    addImageIdeaBtn.innerHTML = '<i class="fas fa-image"></i> إضافة الفكرة من الصورة';
+                }, 2000);
+            });
+            
+            // تبويبات التصفية
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    filterIdeas(filter);
+                });
+            });
+            
+            // تصفية الأفكار
+            function filterIdeas(filter) {
+                const allIdeas = document.querySelectorAll('.idea-card');
+                
+                allIdeas.forEach(idea => {
+                    idea.style.display = 'block';
+                    
+                    if (filter === 'all') return;
+                    
+                    if (filter === 'high' && !idea.classList.contains('priority-high')) {
+                        idea.style.display = 'none';
+                    }
+                    
+                    if (filter === 'work' && idea.querySelector('.category-tag').textContent !== 'عمل') {
+                        idea.style.display = 'none';
+                    }
+                    
+                    if (filter === 'creative' && idea.querySelector('.category-tag').textContent !== 'إبداعي') {
+                        idea.style.display = 'none';
+                    }
+                });
+            }
+            
+            // عرض الأفكار
+            function renderIdeas() {
+                if (ideas.length === 0) {
+                    ideasContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="far fa-lightbulb"></i>
+                            <h3>لا توجد أفكار حتى الآن</h3>
+                            <p>ابدأ بإضافة أول فكرة باستخدام النموذج على اليسار</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                ideasContainer.innerHTML = '';
+                
+                ideas.forEach(idea => {
+                    const ideaElement = document.createElement('div');
+                    ideaElement.className = `idea-card priority-${idea.priority}`;
+                    ideaElement.style.backgroundColor = idea.color;
+                    
+                    let imageHtml = '';
+                    if (idea.type === 'image' && idea.image) {
+                        imageHtml = `<img src="${idea.image}" class="idea-image" alt="صورة الفكرة">`;
+                    }
+                    
+                    ideaElement.innerHTML = `
+                        <div class="idea-actions">
+                            <div class="action-btn edit-btn" data-id="${idea.id}">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div class="action-btn delete-btn" data-id="${idea.id}">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </div>
+                        <h3 class="idea-title">${idea.title}</h3>
+                        ${imageHtml}
+                        <p class="idea-content">${idea.content}</p>
+                        <div class="category-tag">${idea.category}</div>
+                        <div class="idea-meta">
+                            <span><i class="far fa-calendar"></i> ${idea.date}</span>
+                            <span><i class="fas fa-bolt"></i> ${getPriorityText(idea.priority)}</span>
+                        </div>
+                    `;
+                    
+                    ideasContainer.appendChild(ideaElement);
+                });
+                
+                // إضافة مستمعي الأحداث لأزرار الحذف والتعديل
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.getAttribute('data-id'));
+                        deleteIdea(id);
+                    });
+                });
+                
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.getAttribute('data-id'));
+                        editIdea(id);
+                    });
+                });
+            }
+            
+            // حذف فكرة
+            function deleteIdea(id) {
+                if (confirm('هل أنت متأكد من حذف هذه الفكرة؟')) {
+                    ideas = ideas.filter(idea => idea.id !== id);
+                    saveIdeas();
+                    renderIdeas();
+                }
+            }
+            
+            // تعديل فكرة (وظيفة أساسية)
+            function editIdea(id) {
+                const idea = ideas.find(idea => idea.id === id);
+                if (idea) {
+                    document.getElementById('ideaTitle').value = idea.title;
+                    document.getElementById('ideaContent').value = idea.content;
+                    document.getElementById('ideaCategory').value = idea.category;
+                    document.getElementById('ideaPriority').value = idea.priority;
+                    
+                    // حذف الفكرة القديمة
+                    ideas = ideas.filter(item => item.id !== id);
+                    saveIdeas();
+                    renderIdeas();
+                    
+                    // تمرير إلى الأعلى
+                    document.querySelector('.input-section').scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+            
+            // إعادة تعيين النموذج
+            function resetForm() {
+                document.getElementById('ideaTitle').value = '';
+                document.getElementById('ideaContent').value = '';
+                document.getElementById('ideaCategory').value = 'عام';
+                document.getElementById('ideaPriority').value = 'low';
+                
+                // إعادة تعيين اللون إلى الأبيض
+                colorOptions.forEach(opt => opt.classList.remove('selected'));
+                colorOptions[0].classList.add('selected');
+                selectedColor = '#ffffff';
+            }
+            
+            // الحصول على نص الأولوية
+            function getPriorityText(priority) {
+                const priorities = {
+                    'low': 'منخفضة',
+                    'medium': 'متوسطة',
+                    'high': 'عالية'
+                };
+                return priorities[priority];
+            }
+            
+            // حفظ الأفكار في localStorage
+            function saveIdeas() {
+                localStorage.setItem('ideas', JSON.stringify(ideas));
+            }
+            
+            // التهيئة الأولية
+            renderIdeas();
+        });
+    </script>
+</body>
+</html>
